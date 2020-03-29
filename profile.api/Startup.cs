@@ -22,7 +22,7 @@ namespace profile.api {
 
             services.AddEntityFrameworkNpgsql ();
             services.AddDbContext<ProfileApiDbContext> (options =>
-                options.UseNpgsql (Environment.GetEnvironmentVariable ("DbConnectionString")));
+                options.UseNpgsql (Configuration.GetValue<string> ("ConnetionStrings:DbConnectionString")));
 
             services.AddSwaggerGen (c => {
                 c.SwaggerDoc ("v1", new OpenApiInfo {
