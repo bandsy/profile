@@ -9,62 +9,73 @@ using Microsoft.OpenApi.Models;
 using profile.api.EntityFramework;
 
 namespace profile.api {
-    public class Startup {
-        public Startup (IConfiguration configuration) {
-            Configuration = configuration;
-        }
+	public class Startup {
+		public Startup (IConfiguration configuration, IHostEnvironment environment) {
+			Configuration = configuration;
+			Environment = environment;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
+		public IHostEnvironment Environment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services) {
-            services.AddControllers ();
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices (IServiceCollection services) {
+			services.AddControllers ();
+			services.AddEntityFrameworkNpgsql ();
 
-            services.AddEntityFrameworkNpgsql ();
-            services.AddDbContext<ProfileApiDbContext> (options =>
-                options.UseNpgsql (Configuration.GetValue<string> ("ConnetionStrings:DbConnectionString")));
+			if (Environment.IsDevelopment ()) {
 
-            services.AddSwaggerGen (c => {
-                c.SwaggerDoc ("v1", new OpenApiInfo {
-                    Version = "v1",
-                        Title = "Profile Api",
-                        Description = "Api to get profile details ",
-                });
-            });
+				DotNetEnv.Env.Load ();
 
-            services.AddCors (options => {
-                options.AddPolicy ("AllowAllOrigins",
-                    builder => {
-                        builder.AllowAnyOrigin ()
-                            .AllowAnyMethod ()
-                            .AllowAnyHeader ();
-                    });
-            });
-        }
+				services.AddDbContext<ProfileApiDbContext> (options =>
+					options.UseNpgsql (DotNetEnv.Env.GetString ("DbConnectionString")));
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment ()) {
-                app.UseDeveloperExceptionPage ();
-            }
+			} else {
+				services.AddDbContext<ProfileApiDbContext> (options =>
+					options.UseNpgsql (Configuration.GetValue<string> ("ConnetionStrings:DbConnectionString")));
+			}
 
-            app.UseHttpsRedirection ();
+			services.AddSwaggerGen (c => {
+				c.SwaggerDoc ("v1", new OpenApiInfo {
+					Version = "v1",
+						Title = "Profile Api",
+						Description = "Api to get profile details ",
+				});
+			});
 
-            app.UseRouting ();
+			services.AddCors (options => {
+				options.AddPolicy ("AllowAllOrigins",
+					builder => {
+						builder.AllowAnyOrigin ()
+							.AllowAnyMethod ()
+							.AllowAnyHeader ();
+					});
+			});
+		}
 
-            app.UseAuthorization ();
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure (IApplicationBuilder app, IWebHostEnvironment env) {
+			if (env.IsDevelopment ()) {
+				app.UseDeveloperExceptionPage ();
+			}
 
-            app.UseSwagger ();
-            app.UseSwaggerUI (c => {
-                c.SwaggerEndpoint ("/swagger/v1/swagger.json", "Profile API V1");
-                c.RoutePrefix = string.Empty;
-            });
+			app.UseHttpsRedirection ();
 
-            app.UseCors ("AllowAllOrigins");
+			app.UseRouting ();
 
-            app.UseEndpoints (endpoints => {
-                endpoints.MapControllers ();
-            });
-        }
-    }
+			app.UseAuthorization ();
+
+			app.UseSwagger ();
+			app.UseSwaggerUI (c => {
+				c.SwaggerEndpoint ("/swagger/v1/swagger.json", "Profile API V1");
+				c.RoutePrefix = string.Empty;
+			});
+
+			app.UseCors ("AllowAllOrigins");
+
+			app.UseEndpoints (endpoints => {
+				endpoints.MapControllers ();
+			});
+		}
+	}
 }
