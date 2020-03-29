@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using profile.api.Connectors.ProfileConnector;
 using profile.api.EntityFramework;
+using profile.api.Services.ProfileService;
 
 namespace profile.api {
 	public class Startup {
@@ -51,6 +53,15 @@ namespace profile.api {
 							.AllowAnyHeader ();
 					});
 			});
+
+			//-----interfaces------
+
+			//services
+			services.AddSingleton<IProfileService, ProfileService> ();
+
+			//connectors
+			services.AddSingleton<IProfileConnector, ProfileConnector> ();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

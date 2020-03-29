@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\profile.data\profile.data.csproj" />
+    <ProjectReference Include="..\profile.api\profile.api.csproj" />
   </ItemGroup>
 
 </Project>

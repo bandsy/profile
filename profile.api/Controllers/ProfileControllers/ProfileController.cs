@@ -25,5 +25,10 @@ namespace profile.api.Controllers.ProfileControllers {
             return profiles;
         }
 
+        [HttpGet]
+        public ProfileModel GetProfile (string email) {
+            throw new NotImplementedException ();
+        }
+
     }
 }
