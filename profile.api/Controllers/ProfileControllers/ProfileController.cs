@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using profile.api.EntityFramework;
+using profile.api.Connectors.Profile;
 using profile.data.ProfileModels;
 
 namespace profile.api.Controllers.ProfileControllers {
@@ -12,17 +10,35 @@ namespace profile.api.Controllers.ProfileControllers {
     [Route ("/api/[controller]")]
     public class ProfileController : ControllerBase {
 
-        public readonly ProfileApiDbContext _profileApiDbContext;
+        public readonly IProfileConnector _profileConnector;
 
-        public ProfileController (ProfileApiDbContext profileApiDbContext) {
-            _profileApiDbContext = profileApiDbContext;
+        public ProfileController (IProfileConnector profileConnector) {
+            _profileConnector = profileConnector;
         }
 
         [HttpGet]
-        public IEnumerable<ProfileModel> Get () {
-            var profiles = _profileApiDbContext.Profiles.ToList ();
+        [Route ("[action]")]
+        public async Task<IEnumerable<ProfileModel>> Profiles () {
+
+            var profiles = await _profileConnector.GetAllProfiles ();
 
             return profiles;
+        }
+
+        [HttpGet]
+        [Route ("[action]/{id}")]
+        public async Task<ProfileModel> GetProfileById (int id) {
+            var profile = await _profileConnector.GetProfileById (id);
+
+            return profile;
+        }
+
+        [HttpGet]
+        [Route("[action]/{email}")]
+        public async Task<ProfileModel> GetProfileByEmail(string email){
+            var profile = await _profileConnector.GetProfileByEmail(email);
+
+            return profile;
         }
 
     }
