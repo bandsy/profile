@@ -22,6 +22,11 @@ namespace profile.api.Connectors.Profile {
 
         public async Task<ProfileModel> GetProfileByEmail (string email) {
             var profile = await _dbContext.Profiles
+                .Include (x => x.ProfilePicture)
+                .Include (x => x.Media)
+                .Include (x => x.Events)
+                .Include (x => x.GearModels)
+                .Include (x => x.ProfilePicture)
                 .FirstOrDefaultAsync (x => x.EmailAddress.Equals (email));
 
             if (profile == null) {
@@ -33,6 +38,11 @@ namespace profile.api.Connectors.Profile {
 
         public async Task<ProfileModel> GetProfileById (int id) {
             var profile = await _dbContext.Profiles
+                .Include (x => x.ProfilePicture)
+                .Include (x => x.Media)
+                .Include (x => x.Events)
+                .Include (x => x.GearModels)
+                .Include (x => x.ProfilePicture)
                 .FirstOrDefaultAsync (x => x.Id.Equals (id));
 
             if (profile == null) {
