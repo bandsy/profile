@@ -20,16 +20,24 @@ namespace profile.api.Connectors.Profile {
             return profiles;
         }
 
-        public Task<ProfileModel> GetProfileByEmail (string email) {
-            var profile  = _dbContext.Profiles
-            .SingleOrDefaultAsync(x => x.EmailAddress.Equals(email));
+        public async Task<ProfileModel> GetProfileByEmail (string email) {
+            var profile = await _dbContext.Profiles
+                .FirstOrDefaultAsync (x => x.EmailAddress.Equals (email));
+
+            if (profile == null) {
+                return new ProfileModel ();
+            }
 
             return profile;
         }
 
-        public Task<ProfileModel> GetProfileById (int id) {
-            var profile =  _dbContext.Profiles
-            .SingleOrDefaultAsync(x => x.Id.Equals(id));
+        public async Task<ProfileModel> GetProfileById (int id) {
+            var profile = await _dbContext.Profiles
+                .FirstOrDefaultAsync (x => x.Id.Equals (id));
+
+            if (profile == null) {
+                return new ProfileModel ();
+            }
 
             return profile;
         }
