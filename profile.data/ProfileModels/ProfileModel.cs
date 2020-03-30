@@ -60,7 +60,7 @@ namespace profile.data.ProfileModels {
         [JsonProperty ("events")]
         public List<EventsModel> Events { get; set; }
 
-        [JsonProperty ("Availability")]
+        [JsonProperty ("availability")]
         public List<DateTime> Availability { get; set; }
 
         [JsonProperty ("experience")]
