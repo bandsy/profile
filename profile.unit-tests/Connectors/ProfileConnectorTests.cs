@@ -103,16 +103,16 @@ namespace profile.unit_tests.Connectors
             
             //Arrange
             _dbContext.Profiles.Returns(_profilesSet);
-            var dbData = _dbContext.Profiles;
-            _profileConnector.GetAllProfiles().Returns(_dbContext.Profiles.ToList<ProfileModel>());
+            var dbData = _dbContext.Profiles.ToList<ProfileModel>();
+            _profileConnector.GetAllProfiles().Returns(dbData);
 
             //Act
             var results = _profileConnector.GetAllProfiles();
 
             //Assert
-            results.Should ().HaveCount (3).And.AllBeOfType<ProfileModel> ();
+            results.Should ().HaveCount (2).And.AllBeOfType<ProfileModel> ();
             _dbContext.Profiles.ReceivedCalls();
-            _profileConnector.GetAllProfiles().ReceivedCalls();
+            _profileConnector.Received().GetAllProfiles();
 
         }
 
