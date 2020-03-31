@@ -18,9 +18,9 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<IEnumerable<ProfileModel>> Profiles () {
+        public  IEnumerable<ProfileModel> Profiles () {
 
-            var profiles = await _profileConnector.GetAllProfiles ();
+            var profiles =  _profileConnector.GetAllProfiles ();
 
             return profiles;
         }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
@@ -11,91 +10,111 @@ using profile.api.EntityFramework;
 using profile.data.Enums;
 using profile.data.ProfileModels;
 
-namespace profile.unit_tests.Connectors {
+namespace profile.unit_tests.Connectors
+{
 
     [TestFixture]
     public class ProfileConnectorTests {
 
-        public IProfileConnector _profileConnector;
+        private IProfileApiDbContext _dbContext;
+        private IProfileConnector _profileConnector;
         private DbSet<ProfileModel> _profilesSet;
 
-        private IEnumerable<ProfileModel> _profileData = new List<ProfileModel> {
+        private List<ProfileModel> _profileData = new List<ProfileModel> {
             new ProfileModel {
                 Id = 1,
-                Forename = "jimbo",
+                 Forename = "jimbo",
                 Surname = "jones",
                 EmailAddress = "jj@email.com,",
                 ProfileVisibility = ProfileVisibilityEnum.everyone,
                 Gender = GenderEnum.Male,
                 DateOfBirth = new DateTime (1995, 05, 12),
                 Age = 24,
-                ProfilePicture = new MediaModel (),
-                PhoneNumber = "+447513400102",
-                TimezoneId = "1",
-                Languages = new List<string> {
-                    "English",
-                    "Dutch"
-                },
+                 ProfilePicture = new MediaModel (),
+                 PhoneNumber = "+447513400102",
+                 TimezoneId = "1",
+                 Languages = new List<string> {
+                        "English",
+                        "Dutch"
+                 },
                 Media = new List<MediaModel> (),
                 Events = new List<EventsModel> (),
                 Availability = new List<DateTime> (),
                 Experience = new List<ExperienceModel> {
                     new ExperienceModel {
-                        Id = 1,
-                        Years = 2,
-                        Instrument = InstrumentEnum.Bass
-                    }   
-                },
-                GearModels = new List<GearModel>{
-                    new GearModel{
-                        Id = 1,
-                        Instrument = InstrumentEnum.Bass,
-                        Info = "p bass"
+                            Id = 1,
+                            Years = 2,
+                            Instrument = InstrumentEnum.Bass
+                        }
+                    },
+                    GearModels = new List<GearModel> {
+                        new GearModel {
+                            Id = 1,
+                                Instrument = InstrumentEnum.Bass,
+                                Info = "p bass"
+                        }
                     }
-                }
             },
             new ProfileModel {
                 Id = 2,
-                Forename = "nelson",
-                Surname = "munz",
-                EmailAddress = "nm@email.com,",
-                ProfileVisibility = ProfileVisibilityEnum.users,
-                Gender = GenderEnum.Male,
-                DateOfBirth = new DateTime (1995, 05, 12),
-                Age = 24,
-                ProfilePicture = new MediaModel (),
-                PhoneNumber = "+447513400102",
-                TimezoneId = "1",
-                Languages = new List<string> {
-                    "English",
-                    "Dutch"
-                },
-                Media = new List<MediaModel> (),
-                Events = new List<EventsModel> (),
-                Availability = new List<DateTime> (),
-                Experience = new List<ExperienceModel> {
-                    new ExperienceModel {
-                        Id = 2,
-                        Years = 1,
-                        Instrument = InstrumentEnum.Drums
-                    }   
-                },
-                GearModels = new List<GearModel>{
-                    new GearModel{
-                        Id = 2,
-                        Instrument = InstrumentEnum.Drums,
-                        Info = "big dorty drum kit"
+                    Forename = "nelson",
+                    Surname = "munz",
+                    EmailAddress = "nm@email.com,",
+                    ProfileVisibility = ProfileVisibilityEnum.users,
+                    Gender = GenderEnum.Male,
+                    DateOfBirth = new DateTime (1995, 05, 12),
+                    Age = 24,
+                    ProfilePicture = new MediaModel (),
+                    PhoneNumber = "+447513400102",
+                    TimezoneId = "1",
+                    Languages = new List<string> {
+                        "English",
+                        "Dutch"
+                    },
+                    Media = new List<MediaModel> (),
+                    Events = new List<EventsModel> (),
+                    Availability = new List<DateTime> (),
+                    Experience = new List<ExperienceModel> {
+                        new ExperienceModel {
+                            Id = 2,
+                                Years = 1,
+                                Instrument = InstrumentEnum.Drums
+                        }
+                    },
+                    GearModels = new List<GearModel> {
+                        new GearModel {
+                            Id = 2,
+                                Instrument = InstrumentEnum.Drums,
+                                Info = "big dorty drum kit"
+                        }
                     }
-                }
             }
-        }.AsQueryable();
+        };
 
         [SetUp]
         public void Setup () {
             _profileConnector = Substitute.For<IProfileConnector> ();
-            _profilesSet = Substitute.For<DbSet<ProfileModel>, IQueryable<ProfileModel>>();
+            _profilesSet = _profileData.ToFakeDbSet();
+            _dbContext = Substitute.For<IProfileApiDbContext>();
         }
 
+        [Test]
+        public void Cunt () {
+            
+            //Arrange
+            _dbContext.Profiles.Returns(_profilesSet);
+            var dbData = _dbContext.Profiles;
+            _profileConnector.GetAllProfiles().Returns(_dbContext.Profiles.ToList<ProfileModel>());
+
+            //Act
+            var results = _profileConnector.GetAllProfiles();
+
+            //Assert
+            results.Should ().HaveCount (3).And.AllBeOfType<ProfileModel> ();
+            _dbContext.Profiles.ReceivedCalls();
+            _profileConnector.GetAllProfiles().ReceivedCalls();
+
+        }
 
     }
 }

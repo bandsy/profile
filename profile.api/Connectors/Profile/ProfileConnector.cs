@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using profile.api.EntityFramework;
@@ -13,9 +14,9 @@ namespace profile.api.Connectors.Profile {
             _dbContext = dbContext;
         }
 
-        public Task<List<ProfileModel>> GetAllProfiles () {
+        public List<ProfileModel> GetAllProfiles () {
             var profiles = _dbContext.Set<ProfileModel> ()
-                .ToListAsync ();
+                .ToList();
 
             return profiles;
         }
