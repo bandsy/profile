@@ -43,13 +43,11 @@ namespace profile.api.Controllers.ProfileControllers {
         }
 
         [HttpPost]
-        [Route("[action]")]
-        public async Task<ProfileModel> CreateNewProfile ([FromBody] ProfileDTO newProfile) {
+        [Route ("[action]")]
+        public async Task<int> CreateNewProfile ([FromBody] ProfileDTO newProfile) {
+            var profileAdded = await _profileService.AddNewProfile (newProfile);
 
-            var profileAdded = _profileService.AddNewProfile(newProfile);
-
-
-            throw new NotImplementedException();
+            return profileAdded;
         }
 
     }

@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
+using profile.api.Mappings;
 using profile.api.Services.ProfileService;
 
 namespace profile.api {
@@ -54,7 +56,17 @@ namespace profile.api {
 					});
 			});
 
+			var mappingConfig = new MapperConfiguration(mc => {
+				mc.AddProfile(new MappingProfile());
+			});	
+
+			var mapper =  mappingConfig.CreateMapper();
+
+
 			//-----interfaces-----
+
+			//automapper
+			services.AddSingleton(mapper);
 
 			//services
 			services.AddScoped<IProfileService, ProfileService> ();

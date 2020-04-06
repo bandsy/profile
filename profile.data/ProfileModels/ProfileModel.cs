@@ -17,7 +17,7 @@ namespace profile.data.ProfileModels {
         [JsonProperty ("surname")]
         public string Surname { get; set; }
 
-        [Required]
+        //[Required]
         [EmailAddress]
         [JsonProperty ("emailAddress")]
         public string EmailAddress { get; set; }
@@ -28,11 +28,11 @@ namespace profile.data.ProfileModels {
         [JsonProperty ("gender")]
         public GenderEnum Gender { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty ("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
+        //[Required]
         [JsonProperty ("age")]
         public int Age { get; set; }
 

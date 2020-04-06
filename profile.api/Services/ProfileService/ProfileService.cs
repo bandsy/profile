@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using profile.api.Connectors.Profile;
 using profile.data.DTO;
 using profile.data.ProfileModels;
 
 namespace profile.api.Services.ProfileService {
     public class ProfileService : IProfileService {
-        public readonly IProfileConnector _profileConnector;
 
-        public ProfileService (IProfileConnector profileConnector) {
+        public readonly IProfileConnector _profileConnector;
+        public readonly IMapper _mapper;
+
+        public ProfileService (IProfileConnector profileConnector, IMapper mapper) {
             _profileConnector = profileConnector;
+            _mapper = mapper;
         }
 
         public async Task<List<ProfileModel>> GetAllProfiles () {
@@ -31,12 +35,8 @@ namespace profile.api.Services.ProfileService {
         }
 
         public Task<int> AddNewProfile (ProfileDTO newProfile) {
-            var profileToAdd = new ProfileModel ();
 
-
-
-
-
+            var profileToAdd = _mapper.Map<ProfileModel> (newProfile);
 
             var addedProfile = _profileConnector.AddProfile (profileToAdd);
 
