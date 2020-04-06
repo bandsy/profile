@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
+using profile.api.Services.ProfileService;
 
 namespace profile.api {
 	public class Startup {
@@ -54,11 +55,12 @@ namespace profile.api {
 			});
 
 			//-----interfaces-----
-			
+
 			//services
+			services.AddScoped<IProfileService, ProfileService> ();
 
 			//connectors
-			services.AddScoped<IProfileConnector, ProfileConnector>();
+			services.AddScoped<IProfileConnector, ProfileConnector> ();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

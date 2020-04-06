@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using profile.api.Connectors.Profile;
+using profile.api.Services.ProfileService;
 using profile.data.ProfileModels;
 
 namespace profile.api.Controllers.ProfileControllers {
@@ -10,17 +9,17 @@ namespace profile.api.Controllers.ProfileControllers {
     [Route ("/api/[controller]")]
     public class ProfileController : ControllerBase {
 
-        public readonly IProfileConnector _profileConnector;
+        public readonly IProfileService _profileService;
 
-        public ProfileController (IProfileConnector profileConnector) {
-            _profileConnector = profileConnector;
+        public ProfileController (IProfileService profileService) {
+            _profileService = profileService;
         }
 
         [HttpGet]
         [Route ("[action]")]
-        public  IEnumerable<ProfileModel> Profiles () {
+        public async Task<List<ProfileModel>> Profiles () {
 
-            var profiles =  _profileConnector.GetAllProfiles ();
+            var profiles = await _profileService.GetAllProfiles ();
 
             return profiles;
         }
@@ -28,15 +27,15 @@ namespace profile.api.Controllers.ProfileControllers {
         [HttpGet]
         [Route ("[action]/{id}")]
         public async Task<ProfileModel> GetProfileById (int id) {
-            var profile = await _profileConnector.GetProfileById (id);
+            var profile = await _profileService.GetProfileById(id);
 
             return profile;
         }
 
         [HttpGet]
-        [Route("[action]/{email}")]
-        public async Task<ProfileModel> GetProfileByEmail(string email){
-            var profile = await _profileConnector.GetProfileByEmail(email);
+        [Route ("[action]/{email}")]
+        public async Task<ProfileModel> GetProfileByEmail (string email) {
+            var profile = await _profileService.GetProfileByEmail (email);
 
             return profile;
         }

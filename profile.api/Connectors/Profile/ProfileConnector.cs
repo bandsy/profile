@@ -14,9 +14,9 @@ namespace profile.api.Connectors.Profile {
             _dbContext = dbContext;
         }
 
-        public List<ProfileModel> GetAllProfiles () {
+        public Task<List<ProfileModel>> GetAllProfiles () {
             var profiles = _dbContext.Set<ProfileModel> ()
-                .ToList();
+                .ToListAsync ();
 
             return profiles;
         }
