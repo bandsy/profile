@@ -7,5 +7,6 @@ namespace profile.api.Connectors.Profile {
         Task<List<ProfileModel>> GetAllProfiles ();
         Task<ProfileModel> GetProfileById(int id);
         Task<ProfileModel> GetProfileByEmail(string email);
+        Task<int> AddProfile(ProfileModel profile);
     }
 }

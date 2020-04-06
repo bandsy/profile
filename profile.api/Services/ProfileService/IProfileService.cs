@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using profile.data.DTO;
 using profile.data.ProfileModels;
 
 namespace profile.api.Services.ProfileService
@@ -12,5 +13,7 @@ namespace profile.api.Services.ProfileService
          Task<List<ProfileModel>> GetAllProfiles();
          Task<ProfileModel> GetProfileById(int id);
          Task<ProfileModel> GetProfileByEmail(string email);
+
+         Task<int> AddNewProfile(ProfileDTO newProfile);
     }
 }

@@ -15,7 +15,12 @@ namespace profile.api.Connectors.Profile {
         }
 
         public Task<List<ProfileModel>> GetAllProfiles () {
-            var profiles = _dbContext.Set<ProfileModel> ()
+            var profiles = _dbContext.Profiles
+                .Include (x => x.ProfilePicture)
+                .Include (x => x.Media)
+                .Include (x => x.Events)
+                .Include (x => x.GearModels)
+                .Include (x => x.ProfilePicture)
                 .ToListAsync ();
 
             return profiles;
@@ -51,6 +56,14 @@ namespace profile.api.Connectors.Profile {
             }
 
             return profile;
+        }
+
+        public async Task<int> AddProfile (ProfileModel profile) {
+            await _dbContext.Profiles.AddAsync (profile);
+
+            var result = await _dbContext.SaveChangesAsync ();
+
+            return result;
         }
     }
 }

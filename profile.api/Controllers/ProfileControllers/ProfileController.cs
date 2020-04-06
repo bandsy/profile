@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using profile.api.Services.ProfileService;
+using profile.data.DTO;
 using profile.data.ProfileModels;
 
 namespace profile.api.Controllers.ProfileControllers {
@@ -25,19 +27,29 @@ namespace profile.api.Controllers.ProfileControllers {
         }
 
         [HttpGet]
-        [Route ("[action]/{id}")]
-        public async Task<ProfileModel> GetProfileById (int id) {
-            var profile = await _profileService.GetProfileById(id);
+        [Route ("[action]")]
+        public async Task<ProfileModel> GetProfileById ([FromQuery] int id) {
+            var profile = await _profileService.GetProfileById (id);
 
             return profile;
         }
 
         [HttpGet]
-        [Route ("[action]/{email}")]
-        public async Task<ProfileModel> GetProfileByEmail (string email) {
+        [Route ("[action]")]
+        public async Task<ProfileModel> GetProfileByEmail ([FromQuery] string email) {
             var profile = await _profileService.GetProfileByEmail (email);
 
             return profile;
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ProfileModel> CreateNewProfile ([FromBody] ProfileDTO newProfile) {
+
+            var profileAdded = _profileService.AddNewProfile(newProfile);
+
+
+            throw new NotImplementedException();
         }
 
     }
