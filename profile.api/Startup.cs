@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
 using profile.api.Mappings;
+using profile.api.Services.LanguageService;
 using profile.api.Services.ProfileService;
 
 namespace profile.api {
@@ -70,6 +71,7 @@ namespace profile.api {
 
 			//services
 			services.AddScoped<IProfileService, ProfileService> ();
+			services.AddSingleton<ILanguageService, LanguageService>();
 
 			//connectors
 			services.AddScoped<IProfileConnector, ProfileConnector> ();

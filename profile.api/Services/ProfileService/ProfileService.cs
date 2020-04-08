@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using profile.api.Connectors.Profile;
+using profile.api.Services.LanguageService;
 using profile.data.DTO;
 using profile.data.ProfileModels;
 
@@ -9,10 +10,12 @@ namespace profile.api.Services.ProfileService {
     public class ProfileService : IProfileService {
 
         public readonly IProfileConnector _profileConnector;
+        public readonly ILanguageService _languageService;
         public readonly IMapper _mapper;
 
-        public ProfileService (IProfileConnector profileConnector, IMapper mapper) {
+        public ProfileService (IProfileConnector profileConnector, IMapper mapper, ILanguageService languageService) {
             _profileConnector = profileConnector;
+            _languageService = languageService;
             _mapper = mapper;
         }
 
@@ -35,9 +38,12 @@ namespace profile.api.Services.ProfileService {
         }
 
         public Task<int> AddNewProfile (ProfileDTO newProfile) {
-
             var profileToAdd = _mapper.Map<ProfileModel> (newProfile);
 
+            //get iso codes for languages 
+            profileToAdd.Languages = _languageService.GetIsoCodes (newProfile.Languages);
+
+            // call connector to add to db
             var addedProfile = _profileConnector.AddProfile (profileToAdd);
 
             return addedProfile;
