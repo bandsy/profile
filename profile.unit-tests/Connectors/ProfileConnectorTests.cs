@@ -32,7 +32,6 @@ namespace profile.unit_tests.Connectors
                 Age = 24,
                  ProfilePicture = new MediaModel (),
                  PhoneNumber = "+447513400102",
-                 TimezoneId = "1",
                  Languages = new List<string> {
                         "English",
                         "Dutch"
@@ -66,7 +65,6 @@ namespace profile.unit_tests.Connectors
                     Age = 24,
                     ProfilePicture = new MediaModel (),
                     PhoneNumber = "+447513400102",
-                    TimezoneId = "1",
                     Languages = new List<string> {
                         "English",
                         "Dutch"

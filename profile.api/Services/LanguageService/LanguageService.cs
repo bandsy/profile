@@ -15,7 +15,23 @@ namespace profile.api.Services.LanguageService {
                 isoCodes.AddRange (code);
             }
 
-          return isoCodes;
+            return isoCodes;
+        }
+
+        public List<string> GetLanguageNames (List<string> isoCodes) {
+            var languageNames = new List<string> ();
+            var cultures = CultureInfo.GetCultures (CultureTypes.AllCultures);
+
+            foreach (var isoCode in isoCodes) {
+                var languageName = cultures.Where (x => x.ThreeLetterISOLanguageName.Equals (isoCode))
+                    .Select (x => x.EnglishName)
+                    .FirstOrDefault ();
+
+                languageNames.Add (languageName);
+            }
+
+            return languageNames;
+
         }
     }
 }

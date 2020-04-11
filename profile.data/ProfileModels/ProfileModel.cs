@@ -29,8 +29,6 @@ namespace profile.data.ProfileModels {
 
         public string PhoneNumber { get; set; }
 
-        public string TimezoneId { get; set; }
-
         public List<string> Languages { get; set; }
 
         public List<MediaModel> Media { get; set; }

@@ -44,7 +44,7 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpPost]
         [Route ("[action]")]
-        public async Task<int> CreateNewProfile ([FromBody] ProfileDTO newProfile) {
+        public async Task<int> CreateNewProfile ([FromBody] NewProfileDTO newProfile) {
             var profileAdded = await _profileService.AddNewProfile (newProfile);
 
             return profileAdded;

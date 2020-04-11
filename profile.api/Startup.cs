@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,11 +9,13 @@ using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
 using profile.api.Mappings;
+using profile.api.Services.DTOConverters.ProfileDTOToProfileModel;
 using profile.api.Services.LanguageService;
 using profile.api.Services.ProfileService;
 
-namespace profile.api {
-	public class Startup {
+namespace profile.api
+{
+    public class Startup {
 		public Startup (IConfiguration configuration, IHostEnvironment environment) {
 			Configuration = configuration;
 			Environment = environment;
@@ -57,24 +58,26 @@ namespace profile.api {
 					});
 			});
 
-			var mappingConfig = new MapperConfiguration(mc => {
-				mc.AddProfile(new MappingProfile());
-			});	
+			var mappingConfig = new MapperConfiguration (mc => {
+				mc.AddProfile (new MappingProfile ());
+			});
 
-			var mapper =  mappingConfig.CreateMapper();
-
+			var mapper = mappingConfig.CreateMapper ();
 
 			//-----interfaces-----
 
 			//automapper
-			services.AddSingleton(mapper);
+			services.AddSingleton (mapper);
 
 			//services
 			services.AddScoped<IProfileService, ProfileService> ();
-			services.AddSingleton<ILanguageService, LanguageService>();
+			services.AddSingleton<ILanguageService, LanguageService> ();
 
 			//connectors
 			services.AddScoped<IProfileConnector, ProfileConnector> ();
+
+			//converters
+			services.AddSingleton<INewProfileToProfileModelConverter,NewProfileToProfileModelConverter>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using profile.api.Connectors.Profile;
+using profile.api.Services.DTOConverters.ProfileDTOToProfileModel;
 using profile.api.Services.LanguageService;
 using profile.data.DTO;
 using profile.data.ProfileModels;
@@ -11,12 +11,13 @@ namespace profile.api.Services.ProfileService {
 
         public readonly IProfileConnector _profileConnector;
         public readonly ILanguageService _languageService;
-        public readonly IMapper _mapper;
+        public readonly INewProfileToProfileModelConverter _newProfileToProfileModelConverter;
 
-        public ProfileService (IProfileConnector profileConnector, IMapper mapper, ILanguageService languageService) {
+        public ProfileService (IProfileConnector profileConnector, ILanguageService languageService, INewProfileToProfileModelConverter newProfileToProfileModelConverter) {
             _profileConnector = profileConnector;
             _languageService = languageService;
-            _mapper = mapper;
+            _newProfileToProfileModelConverter = newProfileToProfileModelConverter;
+
         }
 
         public async Task<List<ProfileModel>> GetAllProfiles () {
@@ -37,11 +38,10 @@ namespace profile.api.Services.ProfileService {
             return profile;
         }
 
-        public Task<int> AddNewProfile (ProfileDTO newProfile) {
-            var profileToAdd = _mapper.Map<ProfileModel> (newProfile);
+        public Task<int> AddNewProfile (NewProfileDTO newProfile) {
 
-            //get iso codes for languages 
-            profileToAdd.Languages = _languageService.GetIsoCodes (newProfile.Languages);
+            //convert dto
+            var profileToAdd = _newProfileToProfileModelConverter.ConvertNewProfileDTOToProfileModel (newProfile);
 
             // call connector to add to db
             var addedProfile = _profileConnector.AddProfile (profileToAdd);
