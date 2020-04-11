@@ -19,8 +19,7 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<List<ProfileModel>> Profiles () {
-
+        public async Task<List<ProfileDTO>> Profiles () {
             var profiles = await _profileService.GetAllProfiles ();
 
             return profiles;
@@ -28,7 +27,7 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<ProfileModel> GetProfileById ([FromQuery] int id) {
+        public async Task<ProfileDTO> GetProfileById ([FromQuery] int id) {
             var profile = await _profileService.GetProfileById (id);
 
             return profile;
@@ -36,7 +35,7 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<ProfileModel> GetProfileByEmail ([FromQuery] string email) {
+        public async Task<ProfileDTO> GetProfileByEmail ([FromQuery] string email) {
             var profile = await _profileService.GetProfileByEmail (email);
 
             return profile;

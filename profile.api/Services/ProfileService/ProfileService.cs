@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using profile.api.Connectors.Profile;
-using profile.api.Services.DTOConverters.ProfileDTOToProfileModel;
+using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
+using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.LanguageService;
 using profile.data.DTO;
 using profile.data.ProfileModels;
@@ -12,34 +13,42 @@ namespace profile.api.Services.ProfileService {
         public readonly IProfileConnector _profileConnector;
         public readonly ILanguageService _languageService;
         public readonly INewProfileToProfileModelConverter _newProfileToProfileModelConverter;
+        public readonly IProfileModelToProfileDTOConverter _profileModelToProfileDTOConverter;
 
-        public ProfileService (IProfileConnector profileConnector, ILanguageService languageService, INewProfileToProfileModelConverter newProfileToProfileModelConverter) {
+        public ProfileService (IProfileConnector profileConnector, ILanguageService languageService, INewProfileToProfileModelConverter newProfileToProfileModelConverter, IProfileModelToProfileDTOConverter profileModelToProfileDTOConverter) {
             _profileConnector = profileConnector;
             _languageService = languageService;
             _newProfileToProfileModelConverter = newProfileToProfileModelConverter;
+            _profileModelToProfileDTOConverter = profileModelToProfileDTOConverter;
 
         }
 
-        public async Task<List<ProfileModel>> GetAllProfiles () {
-            var profiles = await _profileConnector.GetAllProfiles ();
+        public async Task<List<ProfileDTO>> GetAllProfiles () {
+            var profileModels = await _profileConnector.GetAllProfiles ();
+            var profileDTOs = new List<ProfileDTO> ();
 
-            return profiles;
+            foreach (var profileModel in profileModels) {
+                profileDTOs.Add (_profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profileModel));
+            }
+
+            return profileDTOs;
         }
 
-        public async Task<ProfileModel> GetProfileByEmail (string email) {
-            var profile = await _profileConnector.GetProfileByEmail (email);
+        public async Task<ProfileDTO> GetProfileByEmail (string email) {
+            var profileModel = await _profileConnector.GetProfileByEmail (email);
+            var profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profileModel);
 
-            return profile;
+            return profileDTO;
         }
 
-        public async Task<ProfileModel> GetProfileById (int id) {
-            var profile = await _profileConnector.GetProfileById (id);
+        public async Task<ProfileDTO> GetProfileById (int id) {
+            var profileModel = await _profileConnector.GetProfileById (id);
+            var profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profileModel);
 
-            return profile;
+            return profileDTO;
         }
 
         public Task<int> AddNewProfile (NewProfileDTO newProfile) {
-
             //convert dto
             var profileToAdd = _newProfileToProfileModelConverter.ConvertNewProfileDTOToProfileModel (newProfile);
 

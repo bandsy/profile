@@ -10,9 +10,9 @@ namespace profile.api.Services.ProfileService
     //TODO change model when new one is done
     public interface IProfileService
     {
-         Task<List<ProfileModel>> GetAllProfiles();
-         Task<ProfileModel> GetProfileById(int id);
-         Task<ProfileModel> GetProfileByEmail(string email);
+         Task<List<ProfileDTO>> GetAllProfiles();
+         Task<ProfileDTO> GetProfileById(int id);
+         Task<ProfileDTO> GetProfileByEmail(string email);
          Task<int> AddNewProfile(NewProfileDTO newProfile);
     }
 }

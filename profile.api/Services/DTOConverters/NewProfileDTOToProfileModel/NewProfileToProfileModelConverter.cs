@@ -4,7 +4,7 @@ using profile.api.Services.LanguageService;
 using profile.data.DTO;
 using profile.data.ProfileModels;
 
-namespace profile.api.Services.DTOConverters.ProfileDTOToProfileModel {
+namespace profile.api.Services.DTOConverters.NewProfileDTOToProfileModel {
     public class NewProfileToProfileModelConverter : INewProfileToProfileModelConverter {
         public readonly IMapper _mapper;
         private readonly ILanguageService _languageService;
@@ -21,7 +21,9 @@ namespace profile.api.Services.DTOConverters.ProfileDTOToProfileModel {
             //get iso codes for languages 
             profileModel.Languages = _languageService.GetIsoCodes (newProfile.Languages);
 
-            throw new NotImplementedException ();
+            //TODO additional calls here when blob is implemented
+
+           return profileModel;
         }
     }
 }

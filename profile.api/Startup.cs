@@ -9,7 +9,8 @@ using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
 using profile.api.Mappings;
-using profile.api.Services.DTOConverters.ProfileDTOToProfileModel;
+using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
+using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.LanguageService;
 using profile.api.Services.ProfileService;
 
@@ -78,6 +79,7 @@ namespace profile.api
 
 			//converters
 			services.AddSingleton<INewProfileToProfileModelConverter,NewProfileToProfileModelConverter>();
+			services.AddSingleton<IProfileModelToProfileDTOConverter,ProfileModelToProfileDTOConverter>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

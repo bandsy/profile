@@ -19,8 +19,7 @@ namespace profile.api.Connectors.Profile {
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include (x => x.Availability)
-                .Include (x => x.Experience)
+                .Include(x => x.Experience)
                 .Include (x => x.GearModels)
                 .ToListAsync ();
 
@@ -32,8 +31,7 @@ namespace profile.api.Connectors.Profile {
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include (x => x.Availability)
-                .Include (x => x.Experience)
+                .Include(x => x.Experience)
                 .Include (x => x.GearModels)
                 .FirstOrDefaultAsync (x => x.EmailAddress.Equals (email));
 
@@ -49,8 +47,7 @@ namespace profile.api.Connectors.Profile {
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include (x => x.Availability)
-                .Include (x => x.Experience)
+                .Include(x => x.Experience)
                 .Include (x => x.GearModels)
                 .FirstOrDefaultAsync (x => x.Id.Equals (id));
 
