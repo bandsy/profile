@@ -21,10 +21,10 @@ namespace profile.data.DTO {
         public string EmailAddress { get; set; }
 
         [JsonProperty ("profileVisibility")]
-        public ProfileVisibilityEnum ProfileVisibility { get; set; }
+        public string ProfileVisibility { get; set; }
 
         [JsonProperty ("gender")]
-        public GenderEnum Gender { get; set; }
+        public string Gender { get; set; }
 
         [JsonProperty ("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
