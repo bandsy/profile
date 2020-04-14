@@ -5,6 +5,7 @@ using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
 using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.LanguageService;
 using profile.data.DTO;
+using profile.data.Enums;
 using profile.data.ProfileModels;
 
 namespace profile.api.Services.ProfileService {
@@ -65,11 +66,38 @@ namespace profile.api.Services.ProfileService {
             return addedProfile;
         }
 
+        //TODO 
+        public Task<bool> UpdateProfile (int m_ID, NewProfileDTO updatedProfile) {
+            throw new System.NotImplementedException ();
+        }
+
+        public async Task<ProfileDTO> ClearProfile (int m_ID) {
+            var profileDTO = new ProfileDTO ();
+            var profileToClear = await _profileConnector.GetProfileById (m_ID);
+
+            profileToClear.ProfileVisibility = ProfileVisibilityEnum.none;
+            profileToClear.Bio = "";
+            profileToClear.Languages = new List<string> ();
+            profileToClear.Events = new List<EventsModel> ();
+            profileToClear.Experience = new List<ExperienceModel> ();
+            profileToClear.GearModels = new List<GearModel> ();
+
+            var result = await _profileConnector.UpdateProfile (profileToClear);
+
+            if(result != 0){
+                profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO(profileToClear);
+            }
+
+            return profileDTO;
+
+        }
+
         public async Task<bool> DeleteProfile (int m_ID) {
             var result = await _profileConnector.DeleteProfile (m_ID);
 
             return result != 0 ? true : false;
 
         }
+
     }
 }

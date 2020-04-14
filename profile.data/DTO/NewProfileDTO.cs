@@ -9,7 +9,7 @@ namespace profile.data.DTO {
     public class NewProfileDTO {
 
         [Required]
-        [JsonProperty("m_ID")]
+        [JsonProperty ("m_ID")]
         public int m_ID { get; set; }
 
         [Required]
@@ -32,6 +32,7 @@ namespace profile.data.DTO {
         [JsonProperty ("profileVisibility")]
         public ProfileVisibilityEnum ProfileVisibility { get; set; }
 
+        [Required]
         [JsonProperty ("gender")]
         public GenderEnum Gender { get; set; }
 

@@ -83,6 +83,15 @@ namespace profile.api.Connectors.Profile {
             return result;
         }
 
+        public async Task<int> UpdateProfile (ProfileModel profileToClear) {
+            var result = 0;
+            _dbContext.Update (profileToClear);
+
+            result = await _dbContext.SaveChangesAsync ();
+
+            return result;
+        }
+
         public async Task<int> DeleteProfile (int m_ID) {
 
             var result = 0;
@@ -97,5 +106,6 @@ namespace profile.api.Connectors.Profile {
             return result;
 
         }
+
     }
 }

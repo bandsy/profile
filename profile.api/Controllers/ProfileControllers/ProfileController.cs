@@ -60,14 +60,18 @@ namespace profile.api.Controllers.ProfileControllers {
         [HttpPatch]
         [Route ("[action]")]
         //TODO may need to chneg in model 
-        public async Task<int> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
-            throw new NotImplementedException ();
+        public async Task<bool> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
+            var profileUpdated = await _profileService.UpdateProfile (m_ID, updatedProfile);
+
+            return profileUpdated;
         }
 
         [HttpGet]
         [Route ("[action]")]
         public async Task<ProfileDTO> ClearProfile ([FromQuery] int m_ID) {
-            throw new NotImplementedException ();
+            var profile = await _profileService.ClearProfile (m_ID);
+
+            return profile;
         }
 
         [HttpDelete]
