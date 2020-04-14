@@ -42,9 +42,9 @@ namespace profile.api.Controllers.ProfileControllers {
         }
 
         [HttpGet]
-        [Route("[action]")]
-        public async Task<ProfileDTO> GetProfileByUsername([FromQuery] string username){
-            var profile = await _profileService.GetProfileByUsername(username);
+        [Route ("[action]")]
+        public async Task<ProfileDTO> GetProfileByUsername ([FromQuery] string username) {
+            var profile = await _profileService.GetProfileByUsername (username);
 
             return profile;
         }
@@ -55,6 +55,28 @@ namespace profile.api.Controllers.ProfileControllers {
             var profileAdded = await _profileService.AddNewProfile (newProfile);
 
             return profileAdded;
+        }
+
+        [HttpPatch]
+        [Route ("[action]")]
+        //TODO may need to chneg in model 
+        public async Task<int> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
+            throw new NotImplementedException ();
+        }
+
+        [HttpGet]
+        [Route ("[action]")]
+        public async Task<ProfileDTO> ClearProfile ([FromQuery] int m_ID) {
+            throw new NotImplementedException ();
+        }
+
+        [HttpDelete]
+        [Route ("[action]")]
+        public async Task<bool> DeleteProfile ([FromQuery] int m_ID) {
+
+            var deleted = await _profileService.DeleteProfile (m_ID);
+
+            return deleted;
         }
     }
 }

@@ -83,5 +83,19 @@ namespace profile.api.Connectors.Profile {
             return result;
         }
 
+        public async Task<int> DeleteProfile (int m_ID) {
+
+            var result = 0;
+            var profileModel = await GetProfileById (m_ID);
+
+            if (profileModel != null) {
+                _dbContext.Profiles.Remove (profileModel);
+
+                result = await _dbContext.SaveChangesAsync ();
+            }
+
+            return result;
+
+        }
     }
 }
