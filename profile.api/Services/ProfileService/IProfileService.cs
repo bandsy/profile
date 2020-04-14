@@ -7,12 +7,12 @@ using profile.data.ProfileModels;
 namespace profile.api.Services.ProfileService
 {
 
-    //TODO change model when new one is done
     public interface IProfileService
     {
          Task<List<ProfileDTO>> GetAllProfiles();
-         Task<ProfileDTO> GetProfileById(int id);
+         Task<ProfileDTO> GetProfileById(int m_ID);
          Task<ProfileDTO> GetProfileByEmail(string email);
+         Task<ProfileDTO> GetProfileByUsername(string username);
          Task<int> AddNewProfile(NewProfileDTO newProfile);
     }
 }

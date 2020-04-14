@@ -19,7 +19,7 @@ namespace profile.api.Connectors.Profile {
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include(x => x.Experience)
+                .Include (x => x.Experience)
                 .Include (x => x.GearModels)
                 .ToListAsync ();
 
@@ -31,7 +31,7 @@ namespace profile.api.Connectors.Profile {
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include(x => x.Experience)
+                .Include (x => x.Experience)
                 .Include (x => x.GearModels)
                 .FirstOrDefaultAsync (x => x.EmailAddress.Equals (email));
 
@@ -42,20 +42,37 @@ namespace profile.api.Connectors.Profile {
             return profile;
         }
 
-        public async Task<ProfileModel> GetProfileById (int id) {
+        public async Task<ProfileModel> GetProfileById (int m_ID) {
             var profile = await _dbContext.Profiles
                 .Include (x => x.ProfilePicture)
                 .Include (x => x.Media)
                 .Include (x => x.Events)
-                .Include(x => x.Experience)
+                .Include (x => x.Experience)
                 .Include (x => x.GearModels)
-                .FirstOrDefaultAsync (x => x.Id.Equals (id));
+                .FirstOrDefaultAsync (x => x.m_ID.Equals (m_ID));
 
             if (profile == null) {
                 return new ProfileModel ();
             }
 
             return profile;
+        }
+
+        public async Task<ProfileModel> GetProfileByUsername (string username) {
+            var profile = await _dbContext.Profiles
+                .Include (x => x.ProfilePicture)
+                .Include (x => x.Media)
+                .Include (x => x.Events)
+                .Include (x => x.Experience)
+                .Include (x => x.GearModels)
+                .FirstOrDefaultAsync (x => x.Username.Equals (username));
+
+            if (profile == null) {
+                return new ProfileModel ();
+            }
+
+            return profile;
+
         }
 
         public async Task<int> AddProfile (ProfileModel profile) {
@@ -65,5 +82,6 @@ namespace profile.api.Connectors.Profile {
 
             return result;
         }
+
     }
 }

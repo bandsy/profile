@@ -9,12 +9,20 @@ namespace profile.data.DTO {
     public class NewProfileDTO {
 
         [Required]
+        [JsonProperty("m_ID")]
+        public int m_ID { get; set; }
+
+        [Required]
         [JsonProperty ("forename")]
         public string Forename { get; set; }
 
         [Required]
         [JsonProperty ("surname")]
         public string Surname { get; set; }
+
+        [Required]
+        [JsonProperty ("username")]
+        public string Username { get; set; }
 
         [Required]
         [EmailAddress]

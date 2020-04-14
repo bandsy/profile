@@ -9,10 +9,12 @@ namespace profile.data.ProfileModels {
 
         public int Id { get; set; }
 
+        public int m_ID { get; set; }
+
         public string Forename { get; set; }
 
         public string Surname { get; set; }
-
+        public string Username { get; set; }
         public string EmailAddress { get; set; }
 
         public ProfileVisibilityEnum ProfileVisibility { get; set; }

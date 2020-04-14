@@ -41,9 +41,17 @@ namespace profile.api.Services.ProfileService {
             return profileDTO;
         }
 
-        public async Task<ProfileDTO> GetProfileById (int id) {
-            var profileModel = await _profileConnector.GetProfileById (id);
+        public async Task<ProfileDTO> GetProfileById (int m_ID) {
+            var profileModel = await _profileConnector.GetProfileById (m_ID);
             var profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profileModel);
+
+            return profileDTO;
+        }
+        
+         public async Task<ProfileDTO> GetProfileByUsername(string username)
+        {
+            var profileModel = await _profileConnector.GetProfileByUsername(username);
+            var profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO(profileModel);
 
             return profileDTO;
         }
@@ -57,5 +65,7 @@ namespace profile.api.Services.ProfileService {
 
             return addedProfile;
         }
+
+    
     }
 }
