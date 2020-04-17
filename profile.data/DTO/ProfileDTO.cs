@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using profile.data.Enums;
 using profile.data.ProfileModels;
+using profile.data.ProfileModels.Profile;
 
 namespace profile.data.DTO {
     public class ProfileDTO {
@@ -50,9 +51,6 @@ namespace profile.data.DTO {
         [JsonProperty ("phoneNumber")]
         public string PhoneNumber { get; set; }
 
-        [JsonProperty ("currentDateTime")]
-        public DateTime CurentDateTime { get; set; }
-
         [JsonProperty ("languages")]
         public List<string> Languages { get; set; }
 
@@ -67,9 +65,9 @@ namespace profile.data.DTO {
         public List<DateTime> Availability { get; set; }
 
         [JsonProperty ("experience")]
-        public List<ExperienceModel> Experience { get; set; }
+        public List<ProfileExperienceModel> Experience { get; set; }
 
         [JsonProperty ("gear")]
-        public List<GearModel> GearModels { get; set; }
+        public List<ProfileGearModel> GearModels { get; set; }
     }
 }

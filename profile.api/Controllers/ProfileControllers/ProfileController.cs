@@ -27,8 +27,8 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<ProfileDTO> GetProfileById ([FromQuery] int m_ID) {
-            var profile = await _profileService.GetProfileById (m_ID);
+        public async Task<ProfileDTO> GetProfileById ([FromQuery] int id) {
+            var profile = await _profileService.GetProfileById (id);
 
             return profile;
         }
@@ -59,24 +59,24 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpPatch]
         [Route ("[action]")]
-        public async Task<ProfileDTO> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
-            var profileUpdated = await _profileService.UpdateProfile (m_ID, updatedProfile);
+        public async Task<ProfileDTO> UpdateProfile ([FromQuery] int id, [FromBody] NewProfileDTO updatedProfile) {
+            var profileUpdated = await _profileService.UpdateProfile (id, updatedProfile);
 
             return profileUpdated;
         }
 
         [HttpGet]
         [Route ("[action]")]
-        public async Task<ProfileDTO> ClearProfile ([FromQuery] int m_ID) {
-            var profile = await _profileService.ClearProfile (m_ID);
+        public async Task<ProfileDTO> ClearProfile ([FromQuery] int id) {
+            var profile = await _profileService.ClearProfile (id);
 
             return profile;
         }
 
         [HttpDelete]
         [Route ("[action]")]
-        public async Task<bool> DeleteProfile ([FromQuery] int m_ID) {
-            var deleted = await _profileService.DeleteProfile (m_ID);
+        public async Task<bool> DeleteProfile ([FromQuery] int id) {
+            var deleted = await _profileService.DeleteProfile (id);
 
             return deleted;
         }

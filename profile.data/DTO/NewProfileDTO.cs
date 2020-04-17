@@ -9,68 +9,65 @@ namespace profile.data.DTO {
     public class NewProfileDTO {
 
         [Required]
-        [JsonProperty ("m_ID")]
+        [JsonProperty("m_ID")]
         public int m_ID { get; set; }
 
         [Required]
-        [JsonProperty ("forename")]
+        [JsonProperty("forename")]
         public string Forename { get; set; }
 
         [Required]
-        [JsonProperty ("surname")]
+        [JsonProperty("surname")]
         public string Surname { get; set; }
 
         [Required]
-        [JsonProperty ("username")]
+        [JsonProperty("username")]
         public string Username { get; set; }
 
         [Required]
         [EmailAddress]
-        [JsonProperty ("emailAddress")]
+        [JsonProperty("emailAddress")]
         public string EmailAddress { get; set; }
 
-        [JsonProperty ("profileVisibility")]
+        [JsonProperty("profileVisibility")]
         public ProfileVisibilityEnum ProfileVisibility { get; set; }
 
         [Required]
-        [JsonProperty ("gender")]
+        [JsonProperty("gender")]
         public GenderEnum Gender { get; set; }
 
         [Required]
-        [JsonProperty ("dateOfBirth")]
+        [JsonProperty("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
         //TODO profile pic
         //[JsonProperty("profilePicture")]
         //public MediaModel ProfilePicture { get; set; }
 
-        [JsonProperty ("bio")]
+        [JsonProperty("bio")]
         public string Bio { get; set; }
 
         [Phone]
-        [JsonProperty ("phoneNumber")]
+        [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
 
-        [JsonProperty ("currentDateTime")]
-        public DateTime CurentDateTime { get; set; }
-
-        [JsonProperty ("languages")]
+        [JsonProperty("languages")]
         public List<string> Languages { get; set; }
 
         //TODO media 
         //[JsonProperty("media")]
         //public List<MediaModel> Media { get; set; }
 
-        [JsonProperty ("events")]
+        [JsonProperty("events")]
         public List<EventsModel> Events { get; set; }
 
-        [JsonProperty ("availability")]
+        [JsonProperty("availability")]
         public List<DateTime> Availability { get; set; }
 
-        [JsonProperty ("experience")]
+        [JsonProperty("experience")]
         public List<ExperienceModel> Experience { get; set; }
 
-        [JsonProperty ("gear")]
+        [JsonProperty("gear")]
         public List<GearModel> GearModels { get; set; }
 
     }

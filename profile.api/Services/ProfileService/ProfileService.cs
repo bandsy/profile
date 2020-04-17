@@ -56,12 +56,12 @@ namespace profile.api.Services.ProfileService {
             return profileDTO;
         }
 
-        public Task<int> AddNewProfile (NewProfileDTO newProfile) {
+        public async Task<int> AddNewProfile (NewProfileDTO newProfile) {
             //convert dto
             var profileToAdd = _newProfileToProfileModelConverter.ConvertNewProfileDTOToProfileModel (newProfile);
 
             // call connector to add to db
-            var addedProfile = _profileConnector.AddProfile (profileToAdd);
+            var addedProfile = await _profileConnector.AddProfile (profileToAdd);
 
             return addedProfile;
         }
