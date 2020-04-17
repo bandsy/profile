@@ -66,9 +66,20 @@ namespace profile.api.Services.ProfileService {
             return addedProfile;
         }
 
-        //TODO 
-        public Task<bool> UpdateProfile (int m_ID, NewProfileDTO updatedProfile) {
-            throw new System.NotImplementedException ();
+        public async Task<ProfileDTO> UpdateProfile (int m_ID, NewProfileDTO updatedProfile) {
+            var profileDTO = new ProfileDTO ();
+            var profileToUpdate = await _profileConnector.GetProfileById (m_ID);
+
+            var profile = _newProfileToProfileModelConverter.ConvertNewProfileDTOToProfileModel (updatedProfile);
+            profile.Id = profileToUpdate.Id;
+
+            var result = await _profileConnector.UpdateProfile (profile);
+
+            if (result != 0) {
+                profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profile);
+            }
+
+            return profileDTO;
         }
 
         public async Task<ProfileDTO> ClearProfile (int m_ID) {
@@ -84,8 +95,8 @@ namespace profile.api.Services.ProfileService {
 
             var result = await _profileConnector.UpdateProfile (profileToClear);
 
-            if(result != 0){
-                profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO(profileToClear);
+            if (result != 0) {
+                profileDTO = _profileModelToProfileDTOConverter.ConvertProfileModelToProfileDTO (profileToClear);
             }
 
             return profileDTO;

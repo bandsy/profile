@@ -59,8 +59,7 @@ namespace profile.api.Controllers.ProfileControllers {
 
         [HttpPatch]
         [Route ("[action]")]
-        //TODO may need to chneg in model 
-        public async Task<bool> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
+        public async Task<ProfileDTO> UpdateProfile ([FromQuery] int m_ID, [FromBody] NewProfileDTO updatedProfile) {
             var profileUpdated = await _profileService.UpdateProfile (m_ID, updatedProfile);
 
             return profileUpdated;
@@ -77,7 +76,6 @@ namespace profile.api.Controllers.ProfileControllers {
         [HttpDelete]
         [Route ("[action]")]
         public async Task<bool> DeleteProfile ([FromQuery] int m_ID) {
-
             var deleted = await _profileService.DeleteProfile (m_ID);
 
             return deleted;

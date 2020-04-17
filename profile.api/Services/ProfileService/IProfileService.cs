@@ -12,7 +12,7 @@ namespace profile.api.Services.ProfileService {
         Task<ProfileDTO> GetProfileByEmail (string email);
         Task<ProfileDTO> GetProfileByUsername (string username);
         Task<int> AddNewProfile (NewProfileDTO newProfile);
-        Task<bool> UpdateProfile (int m_ID, NewProfileDTO updatedProfile);
+        Task<ProfileDTO> UpdateProfile (int m_ID, NewProfileDTO updatedProfile);
         Task<ProfileDTO> ClearProfile (int m_ID);
 
         Task<bool> DeleteProfile (int m_ID);
