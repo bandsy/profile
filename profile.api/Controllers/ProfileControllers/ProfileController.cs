@@ -8,7 +8,7 @@ using profile.data.ProfileModels;
 
 namespace profile.api.Controllers.ProfileControllers {
     [ApiController]
-    [Route ("/api/[controller]")]
+    [Route ("/api/v1/[controller]")]
     public class ProfileController : ControllerBase {
 
         public readonly IProfileService _profileService;

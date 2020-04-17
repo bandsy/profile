@@ -9,14 +9,14 @@ using Microsoft.OpenApi.Models;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
 using profile.api.Mappings;
+using profile.api.Services.AgeService;
 using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
 using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.LanguageService;
 using profile.api.Services.ProfileService;
 
-namespace profile.api
-{
-    public class Startup {
+namespace profile.api {
+	public class Startup {
 		public Startup (IConfiguration configuration, IHostEnvironment environment) {
 			Configuration = configuration;
 			Environment = environment;
@@ -73,13 +73,14 @@ namespace profile.api
 			//services
 			services.AddScoped<IProfileService, ProfileService> ();
 			services.AddSingleton<ILanguageService, LanguageService> ();
+			services.AddSingleton<IAgeService, AgeService> ();
 
 			//connectors
 			services.AddScoped<IProfileConnector, ProfileConnector> ();
 
 			//converters
-			services.AddSingleton<INewProfileToProfileModelConverter,NewProfileToProfileModelConverter>();
-			services.AddSingleton<IProfileModelToProfileDTOConverter,ProfileModelToProfileDTOConverter>();
+			services.AddSingleton<INewProfileToProfileModelConverter, NewProfileToProfileModelConverter> ();
+			services.AddSingleton<IProfileModelToProfileDTOConverter, ProfileModelToProfileDTOConverter> ();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

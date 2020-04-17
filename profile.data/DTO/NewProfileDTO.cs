@@ -40,10 +40,6 @@ namespace profile.data.DTO {
         [JsonProperty ("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
-        [JsonProperty ("age")]
-        public int Age { get; set; }
-
         //TODO profile pic
         //[JsonProperty("profilePicture")]
         //public MediaModel ProfilePicture { get; set; }
