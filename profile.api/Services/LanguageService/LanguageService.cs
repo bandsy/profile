@@ -10,9 +10,10 @@ namespace profile.api.Services.LanguageService {
 
             foreach (var language in languages) {
                 var code = cultures.Where(x => x.EnglishName.Equals(language))
-                    .Select(x => x.ThreeLetterISOLanguageName);
+                    .Select(x => x.ThreeLetterISOLanguageName)
+                    .FirstOrDefault();
 
-                isoCodes.AddRange(code);
+                isoCodes.Add(code);
             }
 
             return isoCodes;
@@ -22,7 +23,8 @@ namespace profile.api.Services.LanguageService {
             var languageNames = new List<string>();
             var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
 
-            if (languageNames.Any()) {
+            if (isoCodes.Any()) {
+
                 foreach (var isoCode in isoCodes) {
                     var languageName = cultures.Where(x => x.ThreeLetterISOLanguageName.Equals(isoCode))
                         .Select(x => x.EnglishName)

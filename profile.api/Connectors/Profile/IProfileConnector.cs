@@ -9,7 +9,7 @@ namespace profile.api.Connectors.Profile {
         Task<ProfileModel> GetProfileByEmail (string email);
         Task<ProfileModel> GetProfileByUsername (string username);
         Task<int> AddProfile (ProfileModel profile);
-        Task<int> UpdateProfile (ProfileModel profileToClear);
+        Task<int> UpdateProfile (ProfileModel profileToUpdate);
         Task<int> DeleteProfile (int m_ID);
 
     }

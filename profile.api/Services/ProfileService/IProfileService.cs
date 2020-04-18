@@ -11,7 +11,7 @@ namespace profile.api.Services.ProfileService {
         Task<ProfileDTO> GetProfileById (int m_ID);
         Task<ProfileDTO> GetProfileByEmail (string email);
         Task<ProfileDTO> GetProfileByUsername (string username);
-        Task<int> AddNewProfile (NewProfileDTO newProfile);
+        Task<bool> AddNewProfile (NewProfileDTO newProfile);
         Task<ProfileDTO> UpdateProfile (int m_ID, NewProfileDTO updatedProfile);
         Task<ProfileDTO> ClearProfile (int m_ID);
 

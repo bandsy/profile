@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using profile.api.Connectors.Profile;
+using profile.api.Services.AgeService;
 using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
 using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.LanguageService;
@@ -16,14 +17,18 @@ namespace profile.api.Services.ProfileService {
         public readonly ILanguageService _languageService;
         public readonly INewProfileToProfileModelConverter _newProfileToProfileModelConverter;
         public readonly IProfileModelToProfileDTOConverter _profileModelToProfileDTOConverter;
+
+        public readonly IAgeService _ageService;
         public readonly IMapper _mapper;
 
         public ProfileService(IProfileConnector profileConnector, ILanguageService languageService, INewProfileToProfileModelConverter newProfileToProfileModelConverter, IProfileModelToProfileDTOConverter profileModelToProfileDTOConverter,
+            IAgeService ageService,
             IMapper mapper) {
             _profileConnector = profileConnector;
             _languageService = languageService;
             _newProfileToProfileModelConverter = newProfileToProfileModelConverter;
             _profileModelToProfileDTOConverter = profileModelToProfileDTOConverter;
+            _ageService = ageService;
             _mapper = mapper;
 
         }
@@ -60,14 +65,14 @@ namespace profile.api.Services.ProfileService {
             return profileDTO;
         }
 
-        public async Task<int> AddNewProfile(NewProfileDTO newProfile) {
+        public async Task<bool> AddNewProfile(NewProfileDTO newProfile) {
             //convert dto
             var profileToAdd = _newProfileToProfileModelConverter.ConvertNewProfileDTOToProfileModel(newProfile);
 
             // call connector to add to db
-            var addedProfile = await _profileConnector.AddProfile(profileToAdd);
+            var result = await _profileConnector.AddProfile(profileToAdd);
 
-            return addedProfile;
+            return result != 0 ? true : false;
         }
 
         public async Task<ProfileDTO> UpdateProfile(int m_ID, NewProfileDTO updatedProfile) {
@@ -78,7 +83,16 @@ namespace profile.api.Services.ProfileService {
             if (profile != null) {
 
                 //map properties
+                profile.Forename = updatedProfile.Forename;
+                profile.Surname = updatedProfile.Surname;
+                profile.EmailAddress = updatedProfile.EmailAddress;
+                profile.ProfileVisibility = updatedProfile.ProfileVisibility;
+                profile.Gender = updatedProfile.Gender;
+                profile.DateOfBirth = updatedProfile.DateOfBirth;
+                profile.Age = _ageService.CalculateAge(updatedProfile.DateOfBirth);
                 profile.Bio = updatedProfile.Bio;
+                profile.PhoneNumber = updatedProfile.PhoneNumber;
+                profile.Languages = _languageService.GetIsoCodes(updatedProfile.Languages);
 
                 var result = await _profileConnector.UpdateProfile(profile);
 
