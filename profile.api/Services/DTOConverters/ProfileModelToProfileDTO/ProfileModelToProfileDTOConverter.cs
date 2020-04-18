@@ -8,17 +8,17 @@ namespace profile.api.Services.DTOConverters.ProfileModelToProfileDTO {
     public class ProfileModelToProfileDTOConverter : IProfileModelToProfileDTOConverter {
         public readonly IMapper _mapper;
         public readonly ILanguageService _languageService;
-        public ProfileModelToProfileDTOConverter (IMapper mapper, ILanguageService languageService) {
+        public ProfileModelToProfileDTOConverter(IMapper mapper, ILanguageService languageService) {
             _mapper = mapper;
             _languageService = languageService;
         }
 
-        public ProfileDTO ConvertProfileModelToProfileDTO (ProfileModel profileModel) {
+        public ProfileDTO ConvertProfileModelToProfileDTO(ProfileModel profileModel) {
             //map base properties
-            var profileDTO = _mapper.Map<ProfileDTO> (profileModel);
+            var profileDTO = _mapper.Map<ProfileDTO>(profileModel);
 
             //map language iso codes to diaplaye names 
-            profileDTO.Languages = _languageService.GetLanguageNames (profileModel.Languages);
+            profileDTO.Languages = _languageService.GetLanguageNames(profileModel.Languages);
 
             //TODO additional calls to handle media & listings
 

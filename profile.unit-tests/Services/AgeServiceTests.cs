@@ -1,9 +1,9 @@
-using System.Reflection.Metadata;
 using System;
+using System.Reflection.Metadata;
+using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using profile.api.Services.AgeService;
-using FluentAssertions;
 
 namespace profile.unit_tests.Services {
     [TestFixture]

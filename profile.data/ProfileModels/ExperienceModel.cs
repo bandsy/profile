@@ -4,7 +4,7 @@ using profile.data.Enums;
 
 namespace profile.data.ProfileModels {
     public class ExperienceModel {
-        
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

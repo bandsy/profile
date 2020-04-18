@@ -14,8 +14,8 @@ namespace profile.unit_tests.Services {
         private List<string> _languages;
 
         [SetUp]
-        public void Setup () {
-            _languageService = Substitute.For<ILanguageService> ();
+        public void Setup() {
+            _languageService = Substitute.For<ILanguageService>();
             _codes = new List<string> {
                 "eng",
                 "fre"
@@ -27,37 +27,37 @@ namespace profile.unit_tests.Services {
         }
 
         [Test]
-        public void GetIsoCodes_AllOK_ReturnsIsoCodes () {
+        public void GetIsoCodes_AllOK_ReturnsIsoCodes() {
             //arrange
-            _languageService.GetIsoCodes (Arg.Any<List<string>> ()).Returns (_codes);
+            _languageService.GetIsoCodes(Arg.Any<List<string>>()).Returns(_codes);
 
             //act
-            var result = _languageService.GetIsoCodes (_languages);
+            var result = _languageService.GetIsoCodes(_languages);
 
             //assert
-            result.Should ().HaveCount (2).And.AllBeOfType<string> ();
-            result.First ().Should ().Be ("eng").And.HaveLength (3);
-            result.Last ().Should ().Be ("fre").And.HaveLength (3);
-            result.Should ().BeSameAs (_codes);
+            result.Should().HaveCount(2).And.AllBeOfType<string>();
+            result.First().Should().Be("eng").And.HaveLength(3);
+            result.Last().Should().Be("fre").And.HaveLength(3);
+            result.Should().BeSameAs(_codes);
 
-            _languageService.Received ().GetIsoCodes (Arg.Any<List<string>> ());
+            _languageService.Received().GetIsoCodes(Arg.Any<List<string>>());
         }
 
         [Test]
-        public void GetAllLanguageNames_AllOk_ReturnsLanguageNames () {
+        public void GetAllLanguageNames_AllOk_ReturnsLanguageNames() {
             //arrange
-            _languageService.GetLanguageNames(Arg.Any<List<string>>()).Returns(_languages);            
+            _languageService.GetLanguageNames(Arg.Any<List<string>>()).Returns(_languages);
 
             //act
-            var result = _languageService.GetLanguageNames (_codes);
+            var result = _languageService.GetLanguageNames(_codes);
 
             //assert
-            result.Should ().HaveCount (2).And.AllBeOfType<string> ();
-            result.First ().Should ().Be ("English");
-            result.Last ().Should ().Be ("French");
-            result.Should ().BeSameAs (_languages);
+            result.Should().HaveCount(2).And.AllBeOfType<string>();
+            result.First().Should().Be("English");
+            result.Last().Should().Be("French");
+            result.Should().BeSameAs(_languages);
 
-            _languageService.Received ().GetLanguageNames (Arg.Any<List<string>> ());
+            _languageService.Received().GetLanguageNames(Arg.Any<List<string>>());
 
         }
     }

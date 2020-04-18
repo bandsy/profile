@@ -3,7 +3,7 @@ using profile.data.ProfileModels;
 
 namespace profile.api.EntityFramework {
     public class ProfileApiDbContext : DbContext, IProfileApiDbContext {
-        public ProfileApiDbContext (DbContextOptions<ProfileApiDbContext> options) : base (options) {
+        public ProfileApiDbContext(DbContextOptions<ProfileApiDbContext> options) : base(options) {
 
         }
 
