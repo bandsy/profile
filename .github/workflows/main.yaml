@@ -1,13 +1,18 @@
 name: CI/CD
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - master
       - develop
+  push:
+    branches:
+      - master
+      - develop
+      - release/*
+      - hotfix/*
+      - bug/*
+      - feature/*
 
 jobs:
   test:
@@ -25,7 +30,7 @@ jobs:
         run: cd ./profile.unit-tests && dotnet test
   build:
     name: Build docker container
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -36,12 +41,32 @@ jobs:
         run: docker build -t ${{ github.event.repository.name }} .
       - name: Docker tag
         run: |
-          docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}-develop:${{ github.sha }}
-          docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}-develop:latest
+          docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:${{ github.sha }}
+          if [ ${{ github.ref }} == 'refs/heads/master' ]
+          then
+            docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:master
+          elif [ ${{ github.ref }} == 'refs/heads/develop' ]
+          then
+            docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:develop
+          elif [ ${{ github.ref }} == 'refs/heads/release/*' ]
+          then
+            docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:release
+          fi
+          docker tag ${{ github.event.repository.name }} docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:latest
       - name: Push docker image
         run: |
-          docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}-develop:${{ github.sha }}
-          docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}-develop:latest
+          docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:${{ github.sha }}
+          if [ ${{ github.ref }} == 'refs/heads/master' ]
+          then
+            docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:master
+          elif [ ${{ github.ref }} == 'refs/heads/develop' ]
+          then
+            docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:develop
+          elif [ ${{ github.ref }} == 'refs/heads/release/*' ]
+          then
+            docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:release
+          fi
+          docker push docker.pkg.github.com/bandsy/${{ github.event.repository.name }}/${{ github.event.repository.name }}:latest
   deploy:
     name: Deploy to kubernetes
     if: github.ref == 'refs/heads/develop'
@@ -58,4 +83,4 @@ jobs:
       - name: Install helm
         run: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh
       - name: Update deployment
-        run: helm upgrade web-api-template ./chart --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --namespace develop --set-string sha=${{ github.sha }}
+        run: helm upgrade ${{ github.event.repository.name }} ./chart --install --atomic --namespace develop --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig --set-string sha=${{ github.sha }}

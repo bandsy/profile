@@ -33,3 +33,9 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             successThreshold: 1
+          env:
+            - name: DbConnectionString
+              valueFrom:
+                secretKeyRef:
+                  key: DbConnectionString
+                  name: {{ .Release.Name }}
