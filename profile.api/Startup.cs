@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,20 +18,20 @@ using profile.api.Services.ProfileService;
 
 namespace profile.api {
     public class Startup {
-        public Startup(IConfiguration configuration, IHostEnvironment environment) {
+        public Startup(IConfiguration configuration, IHostEnvironment env) {
             Configuration = configuration;
-            Environment = environment;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostEnvironment Environment { get; }
+        public IHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             services.AddControllers();
             services.AddEntityFrameworkNpgsql();
 
-            if (Environment.IsDevelopment()) {
+            if (Env.IsDevelopment()) {
 
                 DotNetEnv.Env.Load();
 
@@ -39,7 +40,7 @@ namespace profile.api {
 
             } else {
                 services.AddDbContext<ProfileApiDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetValue<string>("ConnetionStrings:DbConnectionString")));
+                    options.UseNpgsql(Environment.GetEnvironmentVariable("DbConnectionString")));
             }
 
             services.AddSwaggerGen(c => {
