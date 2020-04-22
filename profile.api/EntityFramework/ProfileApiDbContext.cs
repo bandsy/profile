@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using profile.data.FollowersModels;
 using profile.data.ProfileModels;
 
 namespace profile.api.EntityFramework {
@@ -12,6 +13,7 @@ namespace profile.api.EntityFramework {
         public DbSet<EventsModel> Events { get; set; }
         public DbSet<ExperienceModel> Experience { get; set; }
         public DbSet<GearModel> GearModels { get; set; }
+        public DbSet<FollowersModel> Followers { get; set; }
 
     }
 }

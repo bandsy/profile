@@ -1,12 +1,14 @@
 using AutoMapper;
 using profile.data.DTO;
 using profile.data.Enums;
+using profile.data.FollowersModels;
 using profile.data.ProfileModels;
 using profile.data.ProfileModels.Profile;
 
 namespace profile.api.Mappings {
     public class MappingProfile : Profile {
         public MappingProfile() {
+            //-----Profile-----
             CreateMap<ProfileModel, ProfileModel>();
 
             CreateMap<NewProfileDTO, ProfileModel>();
@@ -22,6 +24,11 @@ namespace profile.api.Mappings {
             CreateMap<GenderEnum, string>().ConvertUsing(x => x.ToString());
             CreateMap<ProfileVisibilityEnum, string>().ConvertUsing(x => x.ToString());
             CreateMap<InstrumentEnum, string>().ConvertUsing(x => x.ToString());
+
+            //-----Followers-----
+            CreateMap<FollowersDTO, FollowersModel>();
+            CreateMap<FollowersModel, FollowersDTO>();
+
         }
     }
 }
