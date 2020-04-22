@@ -17,10 +17,34 @@ namespace profile.api.Controllers.FollowersControllers {
             _followersService = followersService;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<List<FollowersDTO>> GetFollowers([FromQuery] int id) {
+            var followers = await _followersService.GetFollowers(id);
+
+            return followers;
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<int> GetFollowersCount([FromQuery] int id) {
+            var followersCount = await _followersService.GetFollowersCount(id);
+
+            return followersCount;
+        }
+
         [HttpPost]
         [Route("[action]")]
-        public async Task<bool> AddFollower([FromBody] FollowersDTO followersDto) {
+        public async Task<bool> Follow([FromBody] FollowersDTO followersDto) {
             var result = await _followersService.AddFollower(followersDto);
+
+            return result;
+        }
+
+        [HttpDelete]
+        [Route("[action]")]
+        public async Task<bool> Unfollow([FromBody] FollowersDTO followersDto) {
+            var result = await _followersService.RemoveFollower(followersDto);
 
             return result;
         }

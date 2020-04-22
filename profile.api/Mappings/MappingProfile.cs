@@ -27,6 +27,7 @@ namespace profile.api.Mappings {
 
             //-----Followers-----
             CreateMap<FollowersDTO, FollowersModel>();
+            CreateMap<FollowersModel, FollowersDTO>();
 
         }
     }
