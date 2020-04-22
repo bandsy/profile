@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using profile.api.EntityFramework;
@@ -10,9 +11,10 @@ using profile.api.EntityFramework;
 namespace profile.api.Migrations
 {
     [DbContext(typeof(ProfileApiDbContext))]
-    partial class ProfileApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200422184209_FollowersTableAdded")]
+    partial class FollowersTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,15 +29,15 @@ namespace profile.api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("f_Id")
+                    b.Property<int>("f_id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("m_Id")
+                    b.Property<int>("m_id")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Followers");
+                    b.ToTable("FollowersModels");
                 });
 
             modelBuilder.Entity("profile.data.ProfileModels.EventsModel", b =>
