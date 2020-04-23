@@ -7,11 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using profile.api.Connectors.Blocking;
 using profile.api.Connectors.Followers;
 using profile.api.Connectors.Profile;
 using profile.api.EntityFramework;
 using profile.api.Mappings;
 using profile.api.Services.AgeService;
+using profile.api.Services.BlockingService;
 using profile.api.Services.DTOConverters.NewProfileDTOToProfileModel;
 using profile.api.Services.DTOConverters.ProfileModelToProfileDTO;
 using profile.api.Services.FollowersService;
@@ -78,10 +80,12 @@ namespace profile.api {
             services.AddSingleton<ILanguageService, LanguageService>();
             services.AddSingleton<IAgeService, AgeService>();
             services.AddScoped<IFollowersService, FollowersService>();
+            services.AddScoped<IBlockingService, BlockingService>();
 
             //connectors
             services.AddScoped<IProfileConnector, ProfileConnector>();
             services.AddScoped<IFollowersConnector, FollowersConnector>();
+            services.AddScoped<IBlockingConnector, BlockingConnector>();
 
             //converters
             services.AddSingleton<INewProfileToProfileModelConverter, NewProfileToProfileModelConverter>();

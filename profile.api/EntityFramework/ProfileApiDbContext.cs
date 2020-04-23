@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using profile.data.BlockingModels;
 using profile.data.FollowersModels;
 using profile.data.ProfileModels;
 
@@ -14,6 +15,7 @@ namespace profile.api.EntityFramework {
         public DbSet<ExperienceModel> Experience { get; set; }
         public DbSet<GearModel> GearModels { get; set; }
         public DbSet<FollowersModel> Followers { get; set; }
+        public DbSet<BlockedModel> Blocked { get; set; }
 
     }
 }
