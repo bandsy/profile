@@ -1,4 +1,5 @@
 using AutoMapper;
+using profile.data.BlockingModels;
 using profile.data.DTO;
 using profile.data.Enums;
 using profile.data.FollowersModels;
@@ -29,6 +30,9 @@ namespace profile.api.Mappings {
             CreateMap<FollowersDTO, FollowersModel>();
             CreateMap<FollowersModel, FollowersDTO>();
 
+            //Blocking
+            CreateMap<BlockedDTO, BlockedModel>();
+            CreateMap<BlockedModel, BlockedDTO>();
         }
     }
 }
