@@ -2,11 +2,14 @@ using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using profile.api.Connectors.Blocking;
 using profile.api.Connectors.Followers;
 using profile.api.Connectors.Profile;
@@ -70,6 +73,8 @@ namespace profile.api {
 
             var mapper = mappingConfig.CreateMapper();
 
+            services.AddResponseCaching();
+            
             //-----interfaces-----
 
             //automapper
@@ -98,6 +103,8 @@ namespace profile.api {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseResponseCaching();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -111,6 +118,18 @@ namespace profile.api {
             });
 
             app.UseCors("AllowAllOrigins");
+
+            app.Use((context, next) => {
+                context.Response.Headers["Server"] = "https://www.youtube.com/watch?v=6n3pFFPSlW4";
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+                context.Response.GetTypedHeaders().CacheControl =
+                    new CacheControlHeaderValue {
+                        NoCache = true
+                    };
+
+                return next();
+            });
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

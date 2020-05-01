@@ -86,6 +86,7 @@ namespace profile.api.Services.ProfileService {
                 profile.Forename = updatedProfile.Forename;
                 profile.Surname = updatedProfile.Surname;
                 profile.EmailAddress = updatedProfile.EmailAddress;
+                profile.Username = updatedProfile.Username;
                 profile.ProfileVisibility = updatedProfile.ProfileVisibility;
                 profile.Gender = updatedProfile.Gender;
                 profile.DateOfBirth = updatedProfile.DateOfBirth;
