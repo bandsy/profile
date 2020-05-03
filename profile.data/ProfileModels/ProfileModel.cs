@@ -40,7 +40,7 @@ namespace profile.data.ProfileModels {
 
         public List<EventsModel> Events { get; set; }
 
-        public List<DateTime> Availability { get; set; }
+        public List<AvailabilityModel> Availability { get; set; }
 
         public List<ExperienceModel> Experience { get; set; }
 

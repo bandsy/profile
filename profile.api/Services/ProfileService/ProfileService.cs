@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using profile.api.Connectors.Profile;
@@ -9,6 +10,7 @@ using profile.api.Services.LanguageService;
 using profile.data.DTO;
 using profile.data.Enums;
 using profile.data.ProfileModels;
+using profile.data.ProfileModels.Profile;
 
 namespace profile.api.Services.ProfileService {
     public class ProfileService : IProfileService {
@@ -133,5 +135,38 @@ namespace profile.api.Services.ProfileService {
 
         }
 
+        public async Task<List<ProfileAvailabilityModel>> UpdateAvailability(AvailabilityDTO availabilityDTO) {
+            var result = 0;
+            var profileAvailability = new List<ProfileAvailabilityModel>();
+            var profile = await _profileConnector.GetProfileById(availabilityDTO.m_ID);
+
+            if (profile != null) {
+
+                if (profile.Availability != null) {
+                    profile.Availability.Clear();
+                    profile.Availability.AddRange(availabilityDTO.Availabilities);
+                } else {
+                    profile.Availability = availabilityDTO.Availabilities;
+                }
+
+                result = await _profileConnector.UpdateProfile(profile);
+
+                // if (!(profile.Availability.SequenceEqual(availabilityDTO.Availabilities))) {
+
+                //     profile.Availability.Clear();
+                //     profile.Availability.AddRange(availabilityDTO.Availabilities);
+
+                //     result = await _profileConnector.UpdateProfile(profile);
+                // }
+            }
+
+            if (result != 0) {
+                foreach(var availability in profile.Availability){
+                    profileAvailability.Add(_mapper.Map<ProfileAvailabilityModel>(availability));
+                }
+            }
+
+            return profileAvailability;
+        }
     }
 }

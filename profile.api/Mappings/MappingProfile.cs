@@ -21,10 +21,17 @@ namespace profile.api.Mappings {
             CreateMap<ExperienceModel, ProfileExperienceModel>();
             CreateMap<ProfileExperienceModel, ExperienceModel>();
 
+            CreateMap<AvailabilityDTO, AvailabilityModel>();
+            CreateMap<AvailabilityModel, AvailabilityDTO>();
+
+            CreateMap<AvailabilityModel, ProfileAvailabilityModel>();
+            CreateMap<ProfileAvailabilityModel, AvailabilityModel>();
+
             //enums
             CreateMap<GenderEnum, string>().ConvertUsing(x => x.ToString());
             CreateMap<ProfileVisibilityEnum, string>().ConvertUsing(x => x.ToString());
             CreateMap<InstrumentEnum, string>().ConvertUsing(x => x.ToString());
+            CreateMap<DayEnum, string>().ConvertUsing(x => x.ToString());
 
             //-----Followers-----
             CreateMap<FollowersDTO, FollowersModel>();
