@@ -17,5 +17,6 @@ namespace profile.api.Services.ProfileService {
         Task<ProfileDTO> ClearProfile(int m_ID);
         Task<bool> DeleteProfile(int m_ID);
         Task<List<ProfileAvailabilityModel>> UpdateAvailability(AvailabilityDTO availabilityDTO);
+        Task<List<ProfileGearModel>> UpdateGear(GearDTO gearDTO);
     }
 }
