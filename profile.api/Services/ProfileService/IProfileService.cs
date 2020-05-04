@@ -19,5 +19,6 @@ namespace profile.api.Services.ProfileService {
         Task<List<ProfileAvailabilityModel>> UpdateAvailability(AvailabilityDTO availabilityDTO);
         Task<List<ProfileGearModel>> UpdateGear(GearDTO gearDTO);
         Task<List<ProfileExperienceModel>> UpdateExperience(ExperienceDTO experienceDTO);
+        Task<List<EventsModel>> UpdateEvents(EventsDTO eventsDTO);
     }
 }
