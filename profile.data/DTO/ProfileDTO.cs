@@ -62,7 +62,7 @@ namespace profile.data.DTO {
         public List<EventsModel> Events { get; set; }
 
         [JsonProperty("availability")]
-        public List<DateTime> Availability { get; set; }
+        public List<ProfileAvailabilityModel> Availability { get; set; }
 
         [JsonProperty("experience")]
         public List<ProfileExperienceModel> Experience { get; set; }

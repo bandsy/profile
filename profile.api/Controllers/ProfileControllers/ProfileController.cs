@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using profile.api.Services.ProfileService;
 using profile.data.DTO;
 using profile.data.ProfileModels;
+using profile.data.ProfileModels.Profile;
 
 namespace profile.api.Controllers.ProfileControllers {
     [ApiController]
@@ -79,6 +80,14 @@ namespace profile.api.Controllers.ProfileControllers {
             var deleted = await _profileService.DeleteProfile(id);
 
             return deleted;
+        }
+
+        [HttpPatch]
+        [Route("[action]")]
+        public async Task<List<ProfileAvailabilityModel>> UpdateAvailability([FromBody] AvailabilityDTO availabilityDTO) {
+            var updated = await _profileService.UpdateAvailability(availabilityDTO);
+
+            return updated;
         }
     }
 }

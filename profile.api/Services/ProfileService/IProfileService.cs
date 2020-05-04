@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using profile.data.DTO;
 using profile.data.ProfileModels;
+using profile.data.ProfileModels.Profile;
 
 namespace profile.api.Services.ProfileService {
 
@@ -14,8 +15,7 @@ namespace profile.api.Services.ProfileService {
         Task<bool> AddNewProfile(NewProfileDTO newProfile);
         Task<ProfileDTO> UpdateProfile(int m_ID, NewProfileDTO updatedProfile);
         Task<ProfileDTO> ClearProfile(int m_ID);
-
         Task<bool> DeleteProfile(int m_ID);
-
+        Task<List<ProfileAvailabilityModel>> UpdateAvailability(AvailabilityDTO availabilityDTO);
     }
 }

@@ -38,7 +38,7 @@ namespace profile.unit_tests.Connectors
                  },
                 Media = new List<MediaModel> (),
                 Events = new List<EventsModel> (),
-                Availability = new List<DateTime> (),
+                Availability = new List<AvailabilityModel>(),
                 Experience = new List<ExperienceModel> {
                     new ExperienceModel {
                             Id = 1,
@@ -71,7 +71,7 @@ namespace profile.unit_tests.Connectors
                     },
                     Media = new List<MediaModel> (),
                     Events = new List<EventsModel> (),
-                    Availability = new List<DateTime> (),
+                    Availability = new List<AvailabilityModel>(),
                     Experience = new List<ExperienceModel> {
                         new ExperienceModel {
                             Id = 2,
