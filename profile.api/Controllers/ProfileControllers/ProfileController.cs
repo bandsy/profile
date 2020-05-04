@@ -98,5 +98,12 @@ namespace profile.api.Controllers.ProfileControllers {
             return updated;
         }
 
+        [HttpPatch]
+        [Route("[action]")]
+        public async Task<List<ProfileExperienceModel>> UpdateExperience([FromBody] ExperienceDTO experienceDTO) {
+            var updated = await _profileService.UpdateExperience(experienceDTO);
+
+            return updated;
+        }
     }
 }

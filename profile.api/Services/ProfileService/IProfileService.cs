@@ -18,5 +18,6 @@ namespace profile.api.Services.ProfileService {
         Task<bool> DeleteProfile(int m_ID);
         Task<List<ProfileAvailabilityModel>> UpdateAvailability(AvailabilityDTO availabilityDTO);
         Task<List<ProfileGearModel>> UpdateGear(GearDTO gearDTO);
+        Task<List<ProfileExperienceModel>> UpdateExperience(ExperienceDTO experienceDTO);
     }
 }

@@ -190,5 +190,33 @@ namespace profile.api.Services.ProfileService {
 
             return profileGear;
         }
+
+        public async Task<List<ProfileExperienceModel>> UpdateExperience(ExperienceDTO experienceDTO) {
+            var result = 0;
+            var profileExperience = new List<ProfileExperienceModel>();
+
+            var profile = await _profileConnector.GetProfileById(experienceDTO.m_ID);
+
+            if (profile != null) {
+                if (profile.Experience != null) {
+
+                    profile.Experience.Clear();
+                    profile.Experience.AddRange(experienceDTO.Experience);
+
+                } else {
+                    profile.Experience = experienceDTO.Experience;
+                }
+
+                result = await _profileConnector.UpdateProfile(profile);
+            }
+
+            if (result != 0) {
+                foreach (var experienceModel in profile.Experience) {
+                    profileExperience.Add(_mapper.Map<ProfileExperienceModel>(experienceModel));
+                }
+            }
+
+            return profileExperience;
+        }
     }
 }
