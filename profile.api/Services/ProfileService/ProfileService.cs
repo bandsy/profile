@@ -218,5 +218,33 @@ namespace profile.api.Services.ProfileService {
 
             return profileExperience;
         }
+
+        public async Task<List<EventsModel>> UpdateEvents(EventsDTO eventsDTO) {
+            var result = 0;
+            var eventsModel = new List<EventsModel>();
+
+            var profile = await _profileConnector.GetProfileById(eventsDTO.m_ID);
+
+            if (profile != null) {
+                if (profile.Events != null) {
+
+                    profile.Events.Clear();
+                    profile.Events.AddRange(eventsDTO.Events);
+
+                } else {
+                    profile.Events = eventsDTO.Events;
+                }
+
+                result = await _profileConnector.UpdateProfile(profile);
+            }
+
+            if (result != 0) {
+                foreach (var eventModel in profile.Events) {
+                    eventsModel.Add(eventModel);
+                }
+            }
+
+            return eventsModel;
+        }
     }
 }

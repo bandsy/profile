@@ -105,5 +105,13 @@ namespace profile.api.Controllers.ProfileControllers {
 
             return updated;
         }
+
+        [HttpPatch]
+        [Route("[action]")]
+        public async Task<List<EventsModel>> UpdateEvents([FromBody] EventsDTO eventsDTO){
+            var updated = await _profileService.UpdateEvents(eventsDTO);
+
+            return updated;
+        }
     }
 }
