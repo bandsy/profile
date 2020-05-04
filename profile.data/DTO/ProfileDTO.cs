@@ -68,6 +68,6 @@ namespace profile.data.DTO {
         public List<ProfileExperienceModel> Experience { get; set; }
 
         [JsonProperty("gear")]
-        public List<ProfileGearModel> GearModels { get; set; }
+        public List<ProfileGearModel> Gear { get; set; }
     }
 }

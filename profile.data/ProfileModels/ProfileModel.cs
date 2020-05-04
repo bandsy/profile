@@ -44,7 +44,7 @@ namespace profile.data.ProfileModels {
 
         public List<ExperienceModel> Experience { get; set; }
 
-        public List<GearModel> GearModels { get; set; }
+        public List<GearModel> Gear { get; set; }
 
     }
 }

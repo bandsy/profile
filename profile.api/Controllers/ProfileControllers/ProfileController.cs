@@ -89,5 +89,14 @@ namespace profile.api.Controllers.ProfileControllers {
 
             return updated;
         }
+
+        [HttpPatch]
+        [Route("[action]")]
+        public async Task<List<ProfileGearModel>> UpdateGear([FromBody] GearDTO gearDTO) {
+            var updated = await _profileService.UpdateGear(gearDTO);
+
+            return updated;
+        }
+
     }
 }

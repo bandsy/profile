@@ -116,7 +116,7 @@ namespace profile.api.Services.ProfileService {
             profileToClear.Languages = new List<string>();
             profileToClear.Events = new List<EventsModel>();
             profileToClear.Experience = new List<ExperienceModel>();
-            profileToClear.GearModels = new List<GearModel>();
+            profileToClear.Gear = new List<GearModel>();
 
             var result = await _profileConnector.UpdateProfile(profileToClear);
 
@@ -162,6 +162,33 @@ namespace profile.api.Services.ProfileService {
             }
 
             return profileAvailability;
+        }
+
+        public async Task<List<ProfileGearModel>> UpdateGear(GearDTO gearDTO) {
+            var result = 0;
+            var profileGear = new List<ProfileGearModel>();
+            var profile = await _profileConnector.GetProfileById(gearDTO.m_ID);
+
+            if (profile != null) {
+                if (profile.Gear != null) {
+
+                    profile.Gear.Clear();
+                    profile.Gear.AddRange(gearDTO.Gear);
+
+                } else {
+                    profile.Gear = gearDTO.Gear;
+                }
+
+                result = await _profileConnector.UpdateProfile(profile);
+            }
+
+            if (result != 0) {
+                foreach (var gearModel in profile.Gear) {
+                    profileGear.Add(_mapper.Map<ProfileGearModel>(gearModel));
+                }
+            }
+
+            return profileGear;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace profile.unit_tests.Connectors
                             Instrument = InstrumentEnum.Bass
                         }
                     },
-                    GearModels = new List<GearModel> {
+                    Gear = new List<GearModel> {
                         new GearModel {
                             Id = 1,
                                 Instrument = InstrumentEnum.Bass,
@@ -79,7 +79,7 @@ namespace profile.unit_tests.Connectors
                                 Instrument = InstrumentEnum.Drums
                         }
                     },
-                    GearModels = new List<GearModel> {
+                    Gear = new List<GearModel> {
                         new GearModel {
                             Id = 2,
                                 Instrument = InstrumentEnum.Drums,
