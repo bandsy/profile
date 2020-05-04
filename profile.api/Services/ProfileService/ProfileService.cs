@@ -143,25 +143,20 @@ namespace profile.api.Services.ProfileService {
             if (profile != null) {
 
                 if (profile.Availability != null) {
+
                     profile.Availability.Clear();
                     profile.Availability.AddRange(availabilityDTO.Availabilities);
+
                 } else {
                     profile.Availability = availabilityDTO.Availabilities;
                 }
 
                 result = await _profileConnector.UpdateProfile(profile);
 
-                // if (!(profile.Availability.SequenceEqual(availabilityDTO.Availabilities))) {
-
-                //     profile.Availability.Clear();
-                //     profile.Availability.AddRange(availabilityDTO.Availabilities);
-
-                //     result = await _profileConnector.UpdateProfile(profile);
-                // }
             }
 
             if (result != 0) {
-                foreach(var availability in profile.Availability){
+                foreach (var availability in profile.Availability) {
                     profileAvailability.Add(_mapper.Map<ProfileAvailabilityModel>(availability));
                 }
             }
