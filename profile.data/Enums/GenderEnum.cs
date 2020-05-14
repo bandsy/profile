@@ -3,6 +3,6 @@ namespace profile.data.Enums {
         Male,
         Female,
         Other,
-        Trucker Gamer,
+        TruckerGamer
     }
 }
